@@ -1,6 +1,6 @@
 import type {Observable} from "rxjs";
 import type {Ref} from "vue-demi";
-import {VHttpReq} from "../../src/lib/models/v-http-models";
+import {VHttpReq} from "../../../src/lib/models/v-http-models";
 
 export type VHttpInterceptor = <T>(req: VHttpReq, next: { handle: VHttpInterceptor }) => Observable<T>;
 

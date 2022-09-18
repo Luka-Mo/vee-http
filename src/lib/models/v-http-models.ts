@@ -1,7 +1,7 @@
 import type {Observable} from "rxjs";
 import type {Ref} from "vue-demi";
 
-export type VHttpInterceptor = <T>(req: any, next: any) => Observable<T>;
+export type VHttpInterceptor = <T>(req: VHttpReq, next: { handle: VHttpInterceptor }) => Observable<T>;
 
 export interface XhrHandlerInstance {
   handle: <T>(req: any) => Observable<T>;

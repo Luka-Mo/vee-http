@@ -12,7 +12,7 @@ class XhrHandler {
               interceptor?: VHttpInterceptor) {
     if (next && interceptor) {
       this.next = next;
-      this.handle = (req) => interceptor(req, this.next);
+      this.handle = (req) => interceptor(req, this.next!);
     } else {
       this.handle = (req) => xhrRequest(req);
     }

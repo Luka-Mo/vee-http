@@ -10,7 +10,6 @@ const buildRequest = (url: StringOrRef,
                              body: ReqBody,
                              options?: VHttpReqOptions): VHttpReq => {
   const sanitizedUrl = unref(url) + sanitizeQueryParams(options?.queryParams);
-  console.log(sanitizedUrl);
   const sanitizedHeaders = sanitizeRequestHeaders(options?.headers);
   return {
     url: sanitizedUrl,
@@ -39,6 +38,10 @@ export const patch = <T>(url: StringOrRef, body: ReqBody, options?: VHttpReqOpti
 
 export const options = <T>(url: StringOrRef, options?: VHttpReqOptions): Observable<T> => {
   return xhrHandler.instance.handle(buildRequest(url, 'OPTIONS', null, options));
+}
+
+export const callDelete = <T>(url: StringOrRef, options?: VHttpReqOptions): Observable<T> => {
+  return xhrHandler.instance.handle(buildRequest(url, 'DELETE', null, options));
 }
 
 export const head = <T>(url: StringOrRef, options?: VHttpReqOptions): Observable<T> => {

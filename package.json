@@ -24,7 +24,7 @@
   "typings": "types/index.d.ts",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build --config vite.config.js && cp ./package.json dist/package.json",
+    "build": "tsc && vite build --config vite.config.js && cp ./package.json dist/package.json && cp -r ./types dist",
     "build:package": "npm run build && npm pack ./dist/ --pack-destination ../v-http-module",
     "preview": "vite preview"
   },

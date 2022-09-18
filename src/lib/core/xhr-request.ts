@@ -6,11 +6,9 @@ import {
   merge,
   Observable,
   Subject,
-  switchMap,
   take,
   takeUntil,
-  tap,
-  throwError
+  tap
 } from "rxjs";
 import {RequestResponseType, VHttpEvent, VHttpReq, VHttpResponse, XhrEvent} from "../models/v-http-models";
 import parseResponseHeaders from "../utils/parse-response-headers";
@@ -52,25 +50,25 @@ function loadListener(xhr: XMLHttpRequest): Observable<VHttpResponse<any>> {
     .pipe(
       map(_ => {
           if (xhr.status && xhr.status > 399) {
-            const errorMessage = `${xhr.status}: ${xhr.statusText}`;
-            console.error(errorMessage);
-          }
-          return {
-            status: xhr.status,
-            body: xhr.response,
-            headers: parseResponseHeaders(xhr.getAllResponseHeaders())
+            const errorText = xhr.status === 0 ? `Server unreachable response status (${xhr.status}): possible CORS error.` : `${xhr.status}: ${xhr.statusText}`;
+            throw new HttpErrorResponse(xhr.status, errorText);
+          } else {
+            return {
+              status: xhr.status,
+              body: xhr.response,
+              headers: parseResponseHeaders(xhr.getAllResponseHeaders())
+            }
           }
       })
     )
 }
 
-function errorListener(xhr: XMLHttpRequest): Observable<VHttpResponse<any>> {
+function errorListener(xhr: XMLHttpRequest): Observable<unknown> {
   return fromEvent(xhr, XhrEvent.ERROR).pipe(
-    switchMap(() => throwError(() => {
-      const errorText = `${xhr.status}: ${xhr.statusText}`;
-      console.error(errorText);
-      new HttpErrorResponse(xhr.status, errorText)
-    }))
+    map(() => {
+      let errorText = xhr.status === 0 ? `Server unreachable response status (${xhr.status}): possible CORS error.` : `${xhr.status}: ${xhr.statusText}`;
+      throw new HttpErrorResponse(xhr.status, errorText)
+    })
   );
 }
 
