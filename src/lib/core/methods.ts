@@ -40,7 +40,7 @@ export const options = <T>(url: StringOrRef, options?: VHttpReqOptions): Observa
   return xhrHandler.instance.handle(buildRequest(url, 'OPTIONS', null, options));
 }
 
-export const callDelete = <T>(url: StringOrRef, options?: VHttpReqOptions): Observable<T> => {
+export const del = <T>(url: StringOrRef, options?: VHttpReqOptions): Observable<T> => {
   return xhrHandler.instance.handle(buildRequest(url, 'DELETE', null, options));
 }
 
