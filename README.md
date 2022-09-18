@@ -60,7 +60,7 @@ export default createComponent({
 <script setup lang="ts">
 const {put} = useVHttpClient();
 
-deleteItem(item: {id: string, value: string}) {
+updateItem(item: {id: string, value: string}) {
     put('http://my-item.server./items/' + item.id, item, {
         queryParams: {full: 'true'}
     })
