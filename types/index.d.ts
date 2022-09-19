@@ -1,10 +1,13 @@
-import Vue from 'vue';
 import {App} from 'vue-demi';
 import {ReqBody, StringOrRef, VHttpInterceptor, VHttpReqOptions} from "./lib/models/v-http-models";
 import {Observable} from "rxjs";
 
-export declare module 'vue/types/vue' {
-  interface Vue {
+
+/**
+ * Extends Vue types
+ */
+declare module 'vue' {
+  interface ComponentCustomProperties {
     $vHttpClient: VHttpClient;
   }
 }
@@ -29,7 +32,7 @@ export interface VHttpClient {
   get: <T>(url: StringOrRef, options?: VHttpReqOptions) => Observable<T>,
   post: <T>(url: StringOrRef, body?: ReqBody, options?: VHttpReqOptions) => Observable<T>,
   options: <T>(url: StringOrRef, options?: VHttpReqOptions) => Observable<T>,
-  delete: <T>(url: StringOrRef, options?: VHttpReqOptions) => Observable<T>
+  del: <T>(url: StringOrRef, options?: VHttpReqOptions) => Observable<T>
   put: <T>(url: StringOrRef, body?: ReqBody, options?: VHttpReqOptions) => Observable<T>,
   patch: <T>(url: StringOrRef, body?: ReqBody, options?: VHttpReqOptions) => Observable<T>,
   head: <T>(url: StringOrRef, body?: ReqBody, options?: VHttpReqOptions) => Observable<T>

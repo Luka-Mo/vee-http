@@ -1,6 +1,6 @@
 import type {App} from "vue-demi";
 import {initHandler} from "./lib/core/xhr-handler";
-import {callDelete, get, head, options, patch, post, put} from "./lib/core/methods";
+import {del, get, head, options, patch, post, put} from "./lib/core/methods";
 import {VHttpInterceptor} from "./lib/models/v-http-models";
 
 let _Vue: App;
@@ -10,7 +10,11 @@ const vHttp = {
   post,
   put,
   patch,
-  delete: callDelete,
+  /*
+   * it might present problems when used in destructuring
+   * so it's renamed from delete to del
+   */
+  del,
   options,
   head
 };
