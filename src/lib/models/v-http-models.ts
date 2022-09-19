@@ -1,26 +1,26 @@
-import type {Observable} from "rxjs";
-import type {Ref} from "vue-demi";
+import type {Observable} from 'rxjs';
+import type {Ref} from 'vue';
 
-export type VHttpInterceptor = <T>(req: VHttpReq, next: { handle: VHttpInterceptor }) => Observable<T>;
+export type VHttpInterceptor = <T>(req: Readonly<VHttpRequest>, next: { handle: VHttpInterceptor }) => Observable<T>;
 
 export interface XhrHandlerInstance {
   handle: <T>(req: any) => Observable<T>;
 }
 
-export type ReqMethod = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE' | 'OPTIONS' | 'HEAD';
+export type RequestMethod = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE' | 'OPTIONS' | 'HEAD';
 
-export type ReqBody = object | ReadableStream<any> | Blob | ArrayBufferView
+export type RequestBody = object | ReadableStream<any> | Blob | ArrayBufferView
   | ArrayBuffer | FormData | URLSearchParams | string | null;
 
 export type RequestResponseType = 'json' | 'blob' | 'arrayBuffer' | 'text' | 'formData' | 'document' | '' | null | undefined;
 
 export type ResObserveType = 'response' | 'body';
 
-export interface VHttpReq {
+export interface VHttpRequest {
   url: string;
-  method: ReqMethod;
+  method: RequestMethod;
   headers: Headers;
-  body?: ReqBody;
+  body?: RequestBody;
   options?: VHttpReqOptions;
 }
 

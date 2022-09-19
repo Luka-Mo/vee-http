@@ -1,5 +1,5 @@
 import {StringOrRef} from "../models/v-http-models";
-import {unref} from "vue-demi";
+import {unref} from "vue";
 
 export const sanitizeQueryParams = (queryParams: Record<string, StringOrRef> | undefined): string => {
   if (!queryParams) return '';

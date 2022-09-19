@@ -7,7 +7,7 @@ export default defineConfig({
     build: {
         lib: {
             entry: 'src/index.ts',
-            name: 'vHttp',
+            name: 'veeHttp',
             formats: ['es']
         }
     }

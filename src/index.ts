@@ -1,4 +1,4 @@
-import type {App} from "vue-demi";
+import type {App} from "vue";
 import {initHandler} from "./lib/core/xhr-handler";
 import {del, get, head, options, patch, post, put} from "./lib/core/methods";
 import {VHttpInterceptor} from "./lib/models/v-http-models";

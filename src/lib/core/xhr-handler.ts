@@ -1,11 +1,11 @@
 import type {Observable} from "rxjs";
-import type {VHttpInterceptor, VHttpReq, XhrHandlerInstance} from "../models/v-http-models";
+import type {VHttpInterceptor, VHttpRequest, XhrHandlerInstance} from "../models/v-http-models";
 import xhrRequest from "./xhr-request";
 
 let _xhrHandlerInstance: XhrHandler;
 
 class XhrHandler {
-  handle: <T>(req: VHttpReq) => Observable<T>
+  handle: <T>(req: VHttpRequest) => Observable<T>
   next: XhrHandler | undefined;
 
   constructor(next?: XhrHandler,

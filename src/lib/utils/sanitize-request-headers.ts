@@ -1,4 +1,4 @@
-import {unref} from "vue-demi";
+import {unref} from "vue";
 import {StringOrRef} from "../models/v-http-models";
 
 export const sanitizeRequestHeaders = (headers: Record<string, StringOrRef> | undefined): Headers => {
