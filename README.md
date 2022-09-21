@@ -8,30 +8,18 @@
 * Supports both Options and Composition API
 * Full Typescript support
 * Can be used as a plugin for Vue
+=======
 
 
-## Local Build
+## Install
 
-Run the following command to build a local .tar.gz file
+install using npm
 ```bash
-npm run build:package
+npm install vee-http
 ```
-import the file into  your project's package.json
-```json
-"dependencies": {
-  ...
-  "v-http": "file:[path-to-folder]/v-http-module/[build-file-name].tar.gz"
-  ...
-}
-```
-after that run 
-```bash
-npm install --legacy-peer-deps
-```
-and you should be ready to go.
 
 
-## Installation
+## Usage
 
 ```ts
 import createApp from 'vue';
@@ -42,7 +30,6 @@ const app = createApp(App)
 app.use(createVHttpClient())
 ```
 
-## Usage
 
 ### Options API
 You can access the client via the registered globals

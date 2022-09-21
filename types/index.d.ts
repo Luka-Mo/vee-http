@@ -1,5 +1,5 @@
-import {App} from 'vue-demi';
-import {ReqBody, StringOrRef, VHttpInterceptor, VHttpReqOptions} from "./lib/models/v-http-models";
+import {App} from 'vue';
+import {RequestBody, StringOrRef, VHttpInterceptor, VHttpReqOptions} from "./lib/models/v-http-models";
 import {Observable} from "rxjs";
 
 
@@ -30,12 +30,12 @@ export declare function createVHttpClient(interceptors: VHttpInterceptor[]): {
  */
 export interface VHttpClient {
   get: <T>(url: StringOrRef, options?: VHttpReqOptions) => Observable<T>,
-  post: <T>(url: StringOrRef, body?: ReqBody, options?: VHttpReqOptions) => Observable<T>,
+  post: <T>(url: StringOrRef, body?: RequestBody, options?: VHttpReqOptions) => Observable<T>,
   options: <T>(url: StringOrRef, options?: VHttpReqOptions) => Observable<T>,
   del: <T>(url: StringOrRef, options?: VHttpReqOptions) => Observable<T>
-  put: <T>(url: StringOrRef, body?: ReqBody, options?: VHttpReqOptions) => Observable<T>,
-  patch: <T>(url: StringOrRef, body?: ReqBody, options?: VHttpReqOptions) => Observable<T>,
-  head: <T>(url: StringOrRef, body?: ReqBody, options?: VHttpReqOptions) => Observable<T>
+  put: <T>(url: StringOrRef, body?: RequestBody, options?: VHttpReqOptions) => Observable<T>,
+  patch: <T>(url: StringOrRef, body?: RequestBody, options?: VHttpReqOptions) => Observable<T>,
+  head: <T>(url: StringOrRef, body?: RequestBody, options?: VHttpReqOptions) => Observable<T>
 }
 
 export * from './lib/models/v-http-models';

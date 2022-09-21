@@ -10,7 +10,7 @@ import {
   takeUntil,
   tap
 } from "rxjs";
-import {RequestResponseType, VHttpEvent, VHttpReq, VHttpResponse, XhrEvent} from "../models/v-http-models";
+import {RequestResponseType, VHttpEvent, VHttpRequest, VHttpResponse, XhrEvent} from "../models/v-http-models";
 import parseResponseHeaders from "../utils/parse-response-headers";
 import {HttpErrorResponse} from "../classes/http-error-response";
 import resolveResponse from "../utils/resolve-response";
@@ -72,7 +72,7 @@ function errorListener(xhr: XMLHttpRequest): Observable<unknown> {
   );
 }
 
-export default function <T>(req: VHttpReq): Observable<T | any> {
+export default function <T>(req: VHttpRequest): Observable<T | any> {
   const xhr = new XMLHttpRequest();
 
   let requestCall$;

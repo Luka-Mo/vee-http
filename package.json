@@ -1,9 +1,9 @@
 {
-  "name": "v-http",
-  "description": "RxJS Vue Http Client",
-  "main": "v-http.js",
-  "private": true,
-  "version": "0.0.1",
+  "name": "vee-http",
+  "description": "RxJS Http Client for Vue",
+  "main": "vee-http.js",
+  "private": false,
+  "version": "0.0.3",
   "keywords": [
     "vue",
     "vuejs",
@@ -24,16 +24,9 @@
   "typings": "types/index.d.ts",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build --config vite.config.js && cp ./package.json dist/package.json && cp -r ./types dist",
-    "build:package": "npm run build && npm pack ./dist/ --pack-destination ../v-http-module",
+    "build": "tsc && vite build --config vite.config.js && cp ./package.json dist/package.json && cp -r ./types dist && cp ./README.md dist",
+    "build:local": "npm run build && npm pack ./dist/ --pack-destination ../v-http-module",
     "preview": "vite preview"
-  },
-  "dependencies": {
-    "vue-demi": "^0.13.11"
-  },
-  "peerDependencies": {
-    "@vue/composition-api": "^1.7.0",
-    "vue": ">=3.0.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.37.0",
@@ -42,7 +35,6 @@
     "rxjs": "^7.5.6",
     "typescript": "^4.8.3",
     "vite": "^3.1.0",
-    "vite-plugin-dts": "^1.5.0",
     "vue": "^3.2.39"
   }
 }
