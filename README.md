@@ -8,6 +8,7 @@
 * Supports both Options and Composition API
 * Full Typescript support
 * Can be used as a plugin for Vue
+=======
 
 
 ## Install
