@@ -72,7 +72,7 @@ function errorListener(xhr: XMLHttpRequest): Observable<unknown> {
   );
 }
 
-export default function <T>(req: VHttpRequest): Observable<T | any> {
+export default function <T>(req: VHttpRequest): Observable<T> {
   const xhr = new XMLHttpRequest();
 
   let requestCall$;

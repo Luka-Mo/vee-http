@@ -20,30 +20,38 @@ const buildRequest = (url: StringOrRef,
   };
 }
 
-export const get = <T>(url: StringOrRef, options?: VHttpReqOptions): Observable<T> => {
-  return xhrHandler.instance.handle(buildRequest(url, 'GET', null, options));
+export function request<T>(method: RequestMethod, url: StringOrRef, body: RequestBody, options?: VHttpReqOptions): Observable<T> {
+  return xhrHandler.instance.handle(buildRequest(url, method, body ?? null, options));
 }
 
-export const post = <T>(url: StringOrRef, body: RequestBody, options?: VHttpReqOptions): Observable<T> => {
-  return xhrHandler.instance.handle(buildRequest(url, 'POST', body, options));
+export function get <T>(url: StringOrRef, options?: VHttpReqOptions): Observable<T>
+export function get<T>(url: StringOrRef, body: URLSearchParams, options?: VHttpReqOptions): Observable<T> {
+  return request<T>('GET', url, body ?? null, options);
 }
 
-export const put = <T>(url: StringOrRef, body: RequestBody, options?: VHttpReqOptions): Observable<T> => {
-  return xhrHandler.instance.handle(buildRequest(url, 'PUT', body, options));
+export function post <T>(url: StringOrRef, body: RequestBody, options?: VHttpReqOptions): Observable<T> {
+  return request<T>('POST', url, body ?? null, options);
 }
 
-export const patch = <T>(url: StringOrRef, body: RequestBody, options?: VHttpReqOptions): Observable<T> => {
-  return xhrHandler.instance.handle(buildRequest(url, 'PATCH', body, options));
+export function put<T>(url: StringOrRef, body: RequestBody, options?: VHttpReqOptions): Observable<T> {
+  return request<T>('PUT', url, body ?? null, options);
 }
 
-export const options = <T>(url: StringOrRef, options?: VHttpReqOptions): Observable<T> => {
-  return xhrHandler.instance.handle(buildRequest(url, 'OPTIONS', null, options));
+export function patch<T>(url: StringOrRef, body: RequestBody, options?: VHttpReqOptions): Observable<T> {
+  return request<T>('PATCH', url, body ?? null, options);
 }
 
-export const del = <T>(url: StringOrRef, options?: VHttpReqOptions): Observable<T> => {
-  return xhrHandler.instance.handle(buildRequest(url, 'DELETE', null, options));
+export function options<T>(url: StringOrRef, options?: VHttpReqOptions): Observable<T>
+export function options<T>(url: StringOrRef, body: URLSearchParams, options?: VHttpReqOptions): Observable<T> {
+  return request<T>('OPTIONS', url, body ?? null, options);
 }
 
-export const head = <T>(url: StringOrRef, options?: VHttpReqOptions): Observable<T> => {
-  return xhrHandler.instance.handle(buildRequest(url, 'HEAD', null, options));
+export function del<T>(url: StringOrRef, options?: VHttpReqOptions): Observable<T>
+export function del<T>(url: StringOrRef, body: URLSearchParams, options?: VHttpReqOptions): Observable<T> {
+  return request<T>('DELETE', url, body ?? null, options);
+}
+
+export function head<T>(url: StringOrRef, options?: VHttpReqOptions): Observable<T>
+export function head<T>(url: StringOrRef, body: URLSearchParams, options?: VHttpReqOptions): Observable<T> {
+  return request<T>('HEAD', url, body ?? null, options);
 }
