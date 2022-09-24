@@ -39,4 +39,4 @@ export interface VHttpClient {
 }
 
 export * from './lib/models/v-http-models';
-export * from './lib/classes/v-http-error';
+export * from './lib/classes/http-error-response';

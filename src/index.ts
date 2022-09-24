@@ -1,6 +1,6 @@
 import type {App} from "vue";
 import {initHandler} from "./lib/core/xhr-handler";
-import {request, del, get, head, options, patch, post, put} from "./lib/core/methods";
+import {request, del, get, head, options, patch, post, put} from "./lib/core/http-methods";
 import {VHttpInterceptor} from "./lib/models/v-http-models";
 
 let _Vue: App;

@@ -1,7 +1,7 @@
 {
   "name": "vee-http",
   "description": "RxJS Http Client for Vue",
-  "main": "vee-http.js",
+  "browser": "vee-http.js",
   "private": false,
   "version": "0.0.3",
   "keywords": [
@@ -19,6 +19,12 @@
     "name": "Luka M",
     "email": "lukam@nym.hush.com"
   },
+  "homepage": "https://github.com/Luka-Mo/vee-http/#readme",
+  "bugs": "https://github.com/Luka-Mo/vee-http/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Luka-Mo/vee-http.git"
+  },
   "type": "module",
   "license": "MIT",
   "typings": "types/index.d.ts",
@@ -33,6 +39,7 @@
     "@typescript-eslint/parser": "^5.37.0",
     "eslint": "^8.23.1",
     "rxjs": "^7.5.6",
+    "typedoc": "^0.23.15",
     "typescript": "^4.8.3",
     "vite": "^3.1.0",
     "vue": "^3.2.39"

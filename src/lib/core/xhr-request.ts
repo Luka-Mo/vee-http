@@ -10,7 +10,7 @@ import {
   takeUntil,
   tap
 } from "rxjs";
-import {RequestResponseType, VHttpEvent, VHttpRequest, VHttpResponse, XhrEvent} from "../models/v-http-models";
+import {VHttpEvent, VHttpRequest, VHttpResponse, XhrEvent} from "../models/v-http-models";
 import parseResponseHeaders from "../utils/parse-response-headers";
 import {HttpErrorResponse} from "../classes/http-error-response";
 import resolveResponse from "../utils/resolve-response";
@@ -72,13 +72,23 @@ function errorListener(xhr: XMLHttpRequest): Observable<unknown> {
   );
 }
 
-export default function <T>(req: VHttpRequest): Observable<T> {
+function xhrRequest(req: VHttpRequest & { options: { observe: 'response' } }): Observable<VHttpEvent<any>>
+function xhrRequest<T>(req: VHttpRequest & { options: { observe: 'response' } }): Observable<VHttpEvent<T>>
+function xhrRequest(req: VHttpRequest & { options: { responseType: 'arrayBuffer' } }): Observable<ArrayBuffer>
+function xhrRequest(req: VHttpRequest & { options: { responseType: 'blob' } }): Observable<Blob>
+function xhrRequest(req: VHttpRequest & { options: { responseType: 'formData' } }): Observable<FormData>
+function xhrRequest(req: VHttpRequest & { options: { responseType: 'text' } }): Observable<string>
+function xhrRequest(req: VHttpRequest & { options: { responseType: 'json' } }): Observable<object>
+function xhrRequest<T>(req: VHttpRequest & { options: { responseType: 'json' } }): Observable<T>
+function xhrRequest<T>(req: VHttpRequest): Observable<T>
+function xhrRequest(req: VHttpRequest): Observable<any>
+{
   const xhr = new XMLHttpRequest();
 
   let requestCall$;
   if (req.options?.observe !== 'response') {
     requestCall$ = loadListener(xhr).pipe(
-      map(res => resolveResponse(res.body, xhr.responseType as RequestResponseType ?? 'json')),
+      map(res => resolveResponse(res.body, xhr.responseType)),
       take(1)
     );
   } else {
@@ -111,3 +121,5 @@ export default function <T>(req: VHttpRequest): Observable<T> {
 
   return requestCall$;
 }
+
+export default xhrRequest

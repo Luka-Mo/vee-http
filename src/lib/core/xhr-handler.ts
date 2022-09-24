@@ -1,18 +1,18 @@
 import type {Observable} from "rxjs";
-import type {VHttpInterceptor, VHttpRequest, XhrHandlerInstance} from "../models/v-http-models";
+import type {VHttpEvent, VHttpInterceptor, VHttpRequest, XhrHandlerInstance} from "../models/v-http-models";
 import xhrRequest from "./xhr-request";
 
 let _xhrHandlerInstance: XhrHandler;
 
 class XhrHandler {
-  handle: <T>(req: VHttpRequest) => Observable<T>
+  handle: <T>(req: VHttpRequest) => Observable<T> | Observable<VHttpEvent<T>> | Observable<any>
   next: XhrHandler | undefined;
 
   constructor(next?: XhrHandler,
               interceptor?: VHttpInterceptor) {
     if (next && interceptor) {
       this.next = next;
-      this.handle = (req) => interceptor(req, this.next!);
+      this.handle = (req) => interceptor!(req, this.next!);
     } else {
       this.handle = (req) => xhrRequest(req);
     }
@@ -33,7 +33,7 @@ export const initHandler = (interceptors: VHttpInterceptor[]) => {
 }
 
 export default {
-  get instance() {
-    return _xhrHandlerInstance as XhrHandlerInstance
+  get instance(): XhrHandlerInstance {
+    return _xhrHandlerInstance;
   }
 }

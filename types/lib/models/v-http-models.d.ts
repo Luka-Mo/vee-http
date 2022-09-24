@@ -5,25 +5,34 @@ import type {Ref} from 'vue';
  * Interceptor function
  * @param {VHttpRequest} req
  * @param {XhrHandlerInstance} next
+ * @publicApi
  */
-export type VHttpInterceptor = <T>(req: VHttpRequest, next: XhrHandlerInstance) => Observable<T>;
+export type VHttpInterceptor = <T>(req: Readonly<VHttpRequest>, next: { handle: VHttpInterceptor }) =>
+  Observable<T> | Observable<any> | Observable<VHttpEvent<any>> | Observable<VHttpEvent<T>>
+
 
 /**
- * Object passed as the second argument to the Interceptor function
- * that passes the request to the next interceptor function
- * with calling the handle method
+ * Handler instance that triggers the interceptor chain
+ * @publicApi
  */
 export interface XhrHandlerInstance {
-  handle: VHttpInterceptor;
+  handle: <T>(req: VHttpRequest) => Observable<any> | Observable<T> | Observable<VHttpEvent<any>> | Observable<VHttpEvent<T>>;
 }
 
+
+/**
+ * @publicApi
+ */
 export type RequestMethod = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE' | 'OPTIONS' | 'HEAD';
+
 
 /**
  * A type of payload to be sent to the backend
+ * @publicApi
  */
 export type RequestBody = object | ReadableStream<any> | Blob | ArrayBufferView
   | ArrayBuffer | FormData | URLSearchParams | string | null;
+
 
 /**
  * Available response types for the XHR to properly handle the response payload
@@ -31,19 +40,26 @@ export type RequestBody = object | ReadableStream<any> | Blob | ArrayBufferView
  * if '', null or undefined are used the default type is 'json'
  *
  * It should be noted that the appropriate headers should be added to the request as well.
+ * @publicApi
  */
 export type RequestResponseType = 'json' | 'blob' | 'arrayBuffer' | 'text' | 'formData' | 'document' | '' | null | undefined;
+
 
 /**
  * Calls can return either a response object or the
  * content of the response body
  *
  * Observing the response will return all events related to the XHR
+ *
+ * @publicApi
  */
 export type ResObserveType = 'response' | 'body';
 
+
 /**
  * A request object passed as the first argument to the interceptor
+ *
+ * @publicApi
  */
 export interface VHttpRequest {
   url: string;
@@ -57,15 +73,19 @@ export interface VHttpRequest {
 /**
  * Passing a Ref as an argument is possible, however it will not make the
  * call reactive as unref() is used to obtain the Ref value
+ *
+ * @publicApi
  */
 export type StringOrRef = string | Ref<string>
-
 
 /**
  * Request settings that can optionally be
  * passed to the call
+ *
+ * @publicApi
  */
 export interface VHttpReqOptions {
+  body?: URLSearchParams;
   headers?: Record<string, StringOrRef>;
   queryParams?: Record<string, StringOrRef>;
   responseType?: RequestResponseType;
@@ -73,11 +93,11 @@ export interface VHttpReqOptions {
   skipDefaultHeaders?: boolean;
 }
 
-
 /**
  * When observe is set to 'response' events are sent out instead
  * of the response which additionally includes the Progress data
  *
+ * @publicApi
  */
 export interface VHttpEvent<T> extends VHttpResponse<T> {
   progress?: VHttpProgressReport
@@ -91,6 +111,8 @@ export interface VHttpEvent<T> extends VHttpResponse<T> {
  * A response returned by the XHR
  *
  * If the status is > 399 it returns a HttpErrorResponse Instead
+ *
+ * @publicApi
  */
 export interface VHttpResponse<T> {
   status: number,
@@ -98,8 +120,11 @@ export interface VHttpResponse<T> {
   headers: Record<string, string>;
 }
 
+
 /**
  * Progress report used in VHttpEvent<T>
+ *
+ * @publicApi
  */
 export interface VHttpProgressReport {
   total: number | null,
