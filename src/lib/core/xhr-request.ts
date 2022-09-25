@@ -106,15 +106,15 @@ function addHeaders(req: VHttpRequest, xhr: XMLHttpRequest): void {
   }
 }
 
-function xhrRequest(req: VHttpRequest & { options: { observe: 'response' } }): Observable<VHttpEvent<unknown>>
-function xhrRequest<T>(req: VHttpRequest & { options: { observe: 'response' } }): Observable<VHttpEvent<T>>
-function xhrRequest(req: VHttpRequest & { options: { responseType: 'arrayBuffer' } }): Observable<ArrayBuffer>
-function xhrRequest(req: VHttpRequest & { options: { responseType: 'blob' } }): Observable<Blob>
-function xhrRequest(req: VHttpRequest & { options: { responseType: 'formData' } }): Observable<FormData>
-function xhrRequest(req: VHttpRequest & { options: { responseType: 'text' } }): Observable<string>
-function xhrRequest(req: VHttpRequest & { options: { responseType: 'json' } }): Observable<object>
-function xhrRequest<T>(req: VHttpRequest & { options: { responseType: 'json' } }): Observable<T>
-function xhrRequest<T>(req: VHttpRequest): Observable<T>
+function xhrRequest(req: VHttpRequest & { options: { observe: 'response' } }): Observable<VHttpEvent<unknown>>;
+function xhrRequest<T>(req: VHttpRequest & { options: { observe: 'response' } }): Observable<VHttpEvent<T>>;
+function xhrRequest(req: VHttpRequest & { options: { responseType: 'arrayBuffer' } }): Observable<ArrayBuffer>;
+function xhrRequest(req: VHttpRequest & { options: { responseType: 'blob' } }): Observable<Blob>;
+function xhrRequest(req: VHttpRequest & { options: { responseType: 'formData' } }): Observable<FormData>;
+function xhrRequest(req: VHttpRequest & { options: { responseType: 'text' } }): Observable<string>;
+function xhrRequest(req: VHttpRequest & { options: { responseType: 'json' } }): Observable<object>;
+function xhrRequest<T>(req: VHttpRequest & { options: { responseType: 'json' } }): Observable<T>;
+function xhrRequest<T>(req: VHttpRequest): Observable<T>;
 function xhrRequest(req: VHttpRequest): Observable<unknown>
 {
   const xhr = new XMLHttpRequest();

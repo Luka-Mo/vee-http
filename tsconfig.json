@@ -16,5 +16,25 @@
     "noImplicitReturns": true,
     "skipLibCheck": true
   },
+  "typedocOptions": {
+    "entryPoints": ["src"],
+    "entryPointStrategy": "expand",
+    "out": "docs",
+    "includeVersion": true,
+    "basePath": "./src",
+    "disableSources": true,
+    "searchInComments": true,
+    "visibilityFilters": {
+      "protected": false,
+      "private": false
+    },
+    "exclude": [
+      "**/*+(.spec|.d|.e2e).ts",
+      "**/core/*",
+      "**/utils/*"
+    ],
+    "plugin": ["typedoc-theme-hierarchy"],
+    "theme": "hierarchy"
+  },
   "include": ["src"]
 }
