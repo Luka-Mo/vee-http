@@ -14,6 +14,7 @@ import {VHttpEvent, VHttpRequest, VHttpResponse, XhrEvent} from "../models/v-htt
 import parseResponseHeaders from "../utils/parse-response-headers";
 import {HttpErrorResponse} from "../classes/http-error-response";
 import resolveResponse from "../utils/resolve-response";
+import {serializePayload} from "../utils/serialize-payload";
 
 function progressListener(xhr: XMLHttpRequest): Observable<VHttpEvent<any>> {
   const dispose$ = new Subject<unknown>();
@@ -72,6 +73,36 @@ function errorListener(xhr: XMLHttpRequest): Observable<unknown> {
   );
 }
 
+function addHeaders(req: VHttpRequest, xhr: XMLHttpRequest): void {
+  if (req.headers) {
+    req.headers.forEach((value, key) => {
+      xhr.setRequestHeader(key, value);
+    })
+  }
+
+  const hasBody = !!req.body || !!req.options?.body;
+  if (!req.headers.has('Content-Type') && hasBody) {
+    let contentType = null;
+    if (req.options?.body && typeof URLSearchParams !== 'undefined') {
+      contentType = 'application/x-www-form-urlencoded;charset=UTF-8';
+    } else if (typeof req.body === 'string') {
+      contentType = 'text/plain';
+    } else if (typeof req.body === 'object') {
+      contentType = 'application/json'
+    } else if (req.body && (req.body as any) instanceof Blob) {
+      contentType = (req.body as Blob).type || null;
+    }
+
+    if (contentType) {
+      xhr.setRequestHeader('Content-Type', contentType);
+    }
+  }
+
+  if (!req.headers.has('Accept')) {
+    xhr.setRequestHeader('Accept', 'application/json, text/plain, */*');
+  }
+}
+
 function xhrRequest(req: VHttpRequest & { options: { observe: 'response' } }): Observable<VHttpEvent<any>>
 function xhrRequest<T>(req: VHttpRequest & { options: { observe: 'response' } }): Observable<VHttpEvent<T>>
 function xhrRequest(req: VHttpRequest & { options: { responseType: 'arrayBuffer' } }): Observable<ArrayBuffer>
@@ -97,26 +128,14 @@ function xhrRequest(req: VHttpRequest): Observable<any>
 
   xhr.responseType = req.options?.responseType as any ?? 'json';
   xhr.open(req.method, req.url);
-  if (!req.options?.skipDefaultHeaders) {
-    xhr.setRequestHeader('Accept', 'application/json');
-    xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-  }
-  if (req.headers) {
-    req.headers.forEach((value, key) => {
-      xhr.setRequestHeader(key, value);
-    })
-  }
 
-  if (!req.body) {
-    xhr.send();
+  addHeaders(req, xhr);
+
+  const serializedPayload = serializePayload(req.body);
+  if (serializedPayload) {
+    xhr.send(serializedPayload);
   } else {
-    let body;
-    try {
-      body = JSON.stringify(req.body);
-    } catch (_) {
-      body = req.body;
-    }
-    xhr.send(body as any);
+    xhr.send();
   }
 
   return requestCall$;
