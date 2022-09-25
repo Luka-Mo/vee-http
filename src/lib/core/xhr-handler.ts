@@ -4,6 +4,9 @@ import xhrRequest from './xhr-request';
 
 let _xhrHandlerInstance: XhrHandler;
 
+/**
+ * @ignore
+ */
 class XhrHandler {
   handle: <T>(req: VHttpRequest) => Observable<T> | Observable<VHttpEvent<T>> | Observable<unknown>;
   next: XhrHandler | undefined;
@@ -19,7 +22,11 @@ class XhrHandler {
   }
 }
 
-export const initHandler = (interceptors: VHttpInterceptor[]) => {
+/**
+ * @ignore
+ * @param interceptors
+ */
+export const initHandler = (interceptors: VHttpInterceptor[] | undefined) => {
   if (_xhrHandlerInstance) throw Error('[v-http] Handler already initialized!');
   let handler = new XhrHandler();
   while(interceptors?.length) {
@@ -33,6 +40,9 @@ export const initHandler = (interceptors: VHttpInterceptor[]) => {
 };
 
 export default {
+  /**
+   * @ignore
+   */
   get instance(): XhrHandlerInstance {
     return _xhrHandlerInstance;
   }
