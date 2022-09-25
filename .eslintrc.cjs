@@ -1,4 +1,4 @@
-export default {
+module.exports = {
     'env': {
         'browser': true,
         'es2021': true
@@ -33,6 +33,15 @@ export default {
         'semi': [
             'error',
             'always'
-        ]
+        ],
+        '@typescript-eslint/no-unused-vars': [
+            'warn',
+            {
+                "argsIgnorePattern": "^_",
+                "varsIgnorePattern": "^_",
+                "caughtErrorsIgnorePattern": "^_"
+            }
+        ],
+        '@typescript-eslint/no-non-null-assertion': 0
     }
 };

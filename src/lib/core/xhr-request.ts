@@ -9,14 +9,14 @@ import {
   take,
   takeUntil,
   tap
-} from "rxjs";
-import {VHttpEvent, VHttpRequest, VHttpResponse, XhrEvent} from "../models/v-http-models";
-import parseResponseHeaders from "../utils/parse-response-headers";
-import {HttpErrorResponse} from "../classes/http-error-response";
-import resolveResponse from "../utils/resolve-response";
-import {serializePayload} from "../utils/serialize-payload";
+} from 'rxjs';
+import {VHttpEvent, VHttpRequest, VHttpResponse, XhrEvent} from '../models/v-http-models';
+import parseResponseHeaders from '../utils/parse-response-headers';
+import {HttpErrorResponse} from '../classes/http-error-response';
+import resolveResponse from '../utils/resolve-response';
+import {serializePayload} from '../utils/serialize-payload';
 
-function progressListener(xhr: XMLHttpRequest): Observable<VHttpEvent<any>> {
+function progressListener(xhr: XMLHttpRequest): Observable<VHttpEvent<unknown>> {
   const dispose$ = new Subject<unknown>();
   return merge(
     fromEvent(xhr, XhrEvent.LOADSTART),
@@ -24,17 +24,20 @@ function progressListener(xhr: XMLHttpRequest): Observable<VHttpEvent<any>> {
     fromEvent(xhr, XhrEvent.LOADEND),
     fromEvent(xhr, XhrEvent.LOAD),
     errorListener(xhr)
-    )
+  )
     .pipe(
-      map((ev: any): VHttpEvent<any> => ({
-        progress: {
-          loaded: ev.loaded,
-          total: ev.total
-        },
-        body: null,
-        headers: parseResponseHeaders(xhr.getAllResponseHeaders()),
-        status: xhr.status
-      })),
+      map((ev: unknown) => {
+        const progressEvent = ev as ProgressEvent;
+        return {
+          progress: {
+            loaded: progressEvent.loaded,
+            total: progressEvent.total
+          },
+          body: (progressEvent.target as XMLHttpRequest).response,
+          headers: parseResponseHeaders(xhr.getAllResponseHeaders()),
+          status: xhr.status
+        } as VHttpEvent<unknown>;
+      }),
       takeUntil(dispose$.pipe(delay(1))),
       tap(_ => {
         if (xhr.readyState === xhr.DONE) dispose$.next(null);
@@ -43,32 +46,32 @@ function progressListener(xhr: XMLHttpRequest): Observable<VHttpEvent<any>> {
     );
 }
 
-function loadListener(xhr: XMLHttpRequest): Observable<VHttpResponse<any>> {
+function loadListener(xhr: XMLHttpRequest): Observable<VHttpResponse<unknown>> {
   return merge(
     fromEvent(xhr, XhrEvent.LOAD),
     errorListener(xhr)
   )
     .pipe(
       map(_ => {
-          if (xhr.status && xhr.status > 399) {
-            const errorText = xhr.status === 0 ? `Server unreachable response status (${xhr.status}): possible CORS error.` : `${xhr.status}: ${xhr.statusText}`;
-            throw new HttpErrorResponse(xhr.status, errorText);
-          } else {
-            return {
-              status: xhr.status,
-              body: xhr.response,
-              headers: parseResponseHeaders(xhr.getAllResponseHeaders())
-            }
-          }
+        if (xhr.status && xhr.status > 399) {
+          const errorText = xhr.status === 0 ? `Server unreachable response status (${xhr.status}): possible CORS error.` : `${xhr.status}: ${xhr.statusText}`;
+          throw new HttpErrorResponse(xhr.status, errorText);
+        } else {
+          return {
+            status: xhr.status,
+            body: xhr.response,
+            headers: parseResponseHeaders(xhr.getAllResponseHeaders())
+          };
+        }
       })
-    )
+    );
 }
 
 function errorListener(xhr: XMLHttpRequest): Observable<unknown> {
   return fromEvent(xhr, XhrEvent.ERROR).pipe(
     map(() => {
-      let errorText = xhr.status === 0 ? `Server unreachable response status (${xhr.status}): possible CORS error.` : `${xhr.status}: ${xhr.statusText}`;
-      throw new HttpErrorResponse(xhr.status, errorText)
+      const errorText = xhr.status === 0 ? `Server unreachable response status (${xhr.status}): possible CORS error.` : `${xhr.status}: ${xhr.statusText}`;
+      throw new HttpErrorResponse(xhr.status, errorText);
     })
   );
 }
@@ -77,7 +80,7 @@ function addHeaders(req: VHttpRequest, xhr: XMLHttpRequest): void {
   if (req.headers) {
     req.headers.forEach((value, key) => {
       xhr.setRequestHeader(key, value);
-    })
+    });
   }
 
   const hasBody = !!req.body || !!req.options?.body;
@@ -88,8 +91,8 @@ function addHeaders(req: VHttpRequest, xhr: XMLHttpRequest): void {
     } else if (typeof req.body === 'string') {
       contentType = 'text/plain';
     } else if (typeof req.body === 'object') {
-      contentType = 'application/json'
-    } else if (req.body && (req.body as any) instanceof Blob) {
+      contentType = 'application/json';
+    } else if (req.body && (req.body as unknown) instanceof Blob) {
       contentType = (req.body as Blob).type || null;
     }
 
@@ -103,7 +106,7 @@ function addHeaders(req: VHttpRequest, xhr: XMLHttpRequest): void {
   }
 }
 
-function xhrRequest(req: VHttpRequest & { options: { observe: 'response' } }): Observable<VHttpEvent<any>>
+function xhrRequest(req: VHttpRequest & { options: { observe: 'response' } }): Observable<VHttpEvent<unknown>>
 function xhrRequest<T>(req: VHttpRequest & { options: { observe: 'response' } }): Observable<VHttpEvent<T>>
 function xhrRequest(req: VHttpRequest & { options: { responseType: 'arrayBuffer' } }): Observable<ArrayBuffer>
 function xhrRequest(req: VHttpRequest & { options: { responseType: 'blob' } }): Observable<Blob>
@@ -112,7 +115,7 @@ function xhrRequest(req: VHttpRequest & { options: { responseType: 'text' } }): 
 function xhrRequest(req: VHttpRequest & { options: { responseType: 'json' } }): Observable<object>
 function xhrRequest<T>(req: VHttpRequest & { options: { responseType: 'json' } }): Observable<T>
 function xhrRequest<T>(req: VHttpRequest): Observable<T>
-function xhrRequest(req: VHttpRequest): Observable<any>
+function xhrRequest(req: VHttpRequest): Observable<unknown>
 {
   const xhr = new XMLHttpRequest();
 
@@ -126,7 +129,7 @@ function xhrRequest(req: VHttpRequest): Observable<any>
     requestCall$ = progressListener(xhr);
   }
 
-  xhr.responseType = req.options?.responseType as any ?? 'json';
+  xhr.responseType = req.options?.responseType as XMLHttpRequestResponseType ?? 'json';
   xhr.open(req.method, req.url);
 
   addHeaders(req, xhr);
@@ -141,4 +144,4 @@ function xhrRequest(req: VHttpRequest): Observable<any>
   return requestCall$;
 }
 
-export default xhrRequest
+export default xhrRequest;

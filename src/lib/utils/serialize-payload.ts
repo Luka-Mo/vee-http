@@ -1,5 +1,5 @@
 export function serializePayload(payload: unknown): ArrayBuffer | Blob | FormData | string | null {
-  if (payload === null) {
+  if (payload == null) {
     return null;
   } else if (payload instanceof ArrayBuffer
     || payload instanceof Blob
@@ -9,6 +9,6 @@ export function serializePayload(payload: unknown): ArrayBuffer | Blob | FormDat
   } else if (typeof payload === 'object' || typeof payload === 'boolean' || Array.isArray(payload)) {
     return JSON.stringify(payload);
   } else {
-    return (payload as any).toString();
+    return payload.toString();
   }
 }

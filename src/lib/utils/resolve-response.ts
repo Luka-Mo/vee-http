@@ -1,4 +1,4 @@
-function resolveResponse<T>(response: unknown, responseType: XMLHttpRequestResponseType): T | string | ArrayBuffer | Blob | Object | null
+function resolveResponse<T>(response: unknown, responseType: XMLHttpRequestResponseType): T | string | ArrayBuffer | Blob | null
 {
   const errorMessage = `[http] response type does not match expected: ${responseType ?? 'text'}, received ${typeof response}`;
   if (responseType === 'json') {
@@ -12,10 +12,10 @@ function resolveResponse<T>(response: unknown, responseType: XMLHttpRequestRespo
     return response as Blob;
   } else if (responseType === 'arraybuffer') {
     if (!(response instanceof ArrayBuffer)) throw new Error(errorMessage);
-    return response as ArrayBuffer
+    return response as ArrayBuffer;
   } else {
     throw new Error(errorMessage);
   }
 }
 
-export default resolveResponse
+export default resolveResponse;

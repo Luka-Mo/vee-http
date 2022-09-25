@@ -4,12 +4,12 @@ import {
   StringOrRef,
   VHttpRequest,
   VHttpReqOptions, XhrHandlerInstance, RequestResponseType
-} from "../models/v-http-models";
-import {Observable} from "rxjs";
-import {unref} from "vue";
-import {sanitizeQueryParams} from "../utils/sanitize-query-params";
-import {sanitizeRequestHeaders} from "../utils/sanitize-request-headers";
-import {VHttpEvent} from "../../../types";
+} from '../models/v-http-models';
+import {Observable} from 'rxjs';
+import {unref} from 'vue';
+import {sanitizeQueryParams} from '../utils/sanitize-query-params';
+import {sanitizeRequestHeaders} from '../utils/sanitize-request-headers';
+import {VHttpEvent} from '../../../types';
 
 export class HttpClient {
   constructor(private xhrHandler: XhrHandlerInstance) {
@@ -35,7 +35,7 @@ export class HttpClient {
     skipDefaultHeaders?: boolean;
   }): Observable<VHttpEvent<T>>
   request<T>(method: RequestMethod, url: StringOrRef, body: RequestBody, options?: VHttpReqOptions): Observable<T>
-  request(method: RequestMethod, url: StringOrRef, body: RequestBody, options?: VHttpReqOptions): Observable<any>
+  request(method: RequestMethod, url: StringOrRef, body: RequestBody, options?: VHttpReqOptions): Observable<unknown>
   {
     return this.xhrHandler.handle(this.buildRequest(url, method, body, options));
   }
@@ -58,9 +58,9 @@ export class HttpClient {
     skipDefaultHeaders?: boolean;
   }): Observable<VHttpEvent<T>>
   get<T>(url: StringOrRef, options?: VHttpReqOptions): Observable<T>
-  get(url: StringOrRef, options?: VHttpReqOptions): Observable<any>
+  get(url: StringOrRef, options?: VHttpReqOptions): Observable<unknown>
   {
-    return this.request('GET', url, null, options as any);
+    return this.request('GET', url, null, options as VHttpReqOptions);
   }
 
 
@@ -82,7 +82,7 @@ export class HttpClient {
     skipDefaultHeaders?: boolean;
   }): Observable<VHttpEvent<T>>
   post<T>(url: StringOrRef, body: RequestBody, options?: VHttpReqOptions): Observable<T>
-  post(url: StringOrRef, body: RequestBody, options?: VHttpReqOptions): Observable<any>
+  post(url: StringOrRef, body: RequestBody, options?: VHttpReqOptions): Observable<unknown>
   {
     return this.request('POST', url, body, options as VHttpReqOptions);
   }
@@ -104,7 +104,7 @@ export class HttpClient {
     skipDefaultHeaders?: boolean;
   }): Observable<VHttpEvent<T>>
   put<T>(url: StringOrRef, body: RequestBody, options?: VHttpReqOptions): Observable<T>
-  put(url: StringOrRef, body: RequestBody, options?: VHttpReqOptions): Observable<any>
+  put(url: StringOrRef, body: RequestBody, options?: VHttpReqOptions): Observable<unknown>
   {
     return this.request('PUT', url, body ?? null, options as VHttpReqOptions);
   }
@@ -125,7 +125,7 @@ export class HttpClient {
     skipDefaultHeaders?: boolean;
   }): Observable<VHttpEvent<T>>
   patch<T>(url: StringOrRef, body: RequestBody, options?: VHttpReqOptions): Observable<T>
-  patch(url: StringOrRef, body: RequestBody, options?: VHttpReqOptions): Observable<any>
+  patch(url: StringOrRef, body: RequestBody, options?: VHttpReqOptions): Observable<unknown>
   {
     return this.request('PATCH', url, body ?? null, options as VHttpReqOptions);
   }
@@ -145,7 +145,7 @@ export class HttpClient {
     skipDefaultHeaders?: boolean;
   }): Observable<VHttpEvent<T>>
   options<T>(url: StringOrRef, options?: VHttpReqOptions): Observable<T>
-  options(url: StringOrRef, options?: VHttpReqOptions): Observable<any>
+  options(url: StringOrRef, options?: VHttpReqOptions): Observable<unknown>
   {
     return this.request('OPTIONS', url, null, options as VHttpReqOptions);
   }
@@ -165,7 +165,7 @@ export class HttpClient {
     skipDefaultHeaders?: boolean;
   }): Observable<VHttpEvent<T>>
   delete<T>(url: StringOrRef, options?: VHttpReqOptions): Observable<T>
-  delete(url: StringOrRef, options?: VHttpReqOptions): Observable<any>
+  delete(url: StringOrRef, options?: VHttpReqOptions): Observable<unknown>
   {
     return this.request('DELETE', url, null, options as VHttpReqOptions);
   }
@@ -186,7 +186,7 @@ export class HttpClient {
     skipDefaultHeaders?: boolean;
   }): Observable<VHttpEvent<T>>
   head<T>(url: StringOrRef, options?: VHttpReqOptions): Observable<T>
-  head(url: StringOrRef, options?: VHttpReqOptions): Observable<any>
+  head(url: StringOrRef, options?: VHttpReqOptions): Observable<unknown>
   {
     return this.request('HEAD', url, null, options as VHttpReqOptions);
   }
