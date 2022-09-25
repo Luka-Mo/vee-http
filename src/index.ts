@@ -1,7 +1,7 @@
-import type {App} from "vue";
-import xhrHandler, {initHandler} from "./lib/core/xhr-handler";
-import {VHttpInterceptor} from "./lib/models/v-http-models";
-import {HttpClient} from "./lib/classes/http-client";
+import type {App} from 'vue';
+import xhrHandler, {initHandler} from './lib/core/xhr-handler';
+import {VHttpInterceptor} from './lib/models/v-http-models';
+import {HttpClient} from './lib/classes/http-client';
 
 let _Vue: App;
 let _client: HttpClient;
@@ -18,5 +18,5 @@ export const createVHttpClient = (interceptors: VHttpInterceptor[]) => {
       _Vue = app;
       _Vue.config.globalProperties.$vHttpClient = _client;
     }
-  }
-}
+  };
+};

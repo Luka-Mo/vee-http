@@ -8,7 +8,7 @@ import type {Ref} from 'vue';
  * @publicApi
  */
 export type VHttpInterceptor = <T>(req: Readonly<VHttpRequest>, next: { handle: VHttpInterceptor }) =>
-  Observable<T> | Observable<any> | Observable<VHttpEvent<any>> | Observable<VHttpEvent<T>>
+  Observable<T> | Observable<unknown> | Observable<VHttpEvent<unknown>> | Observable<VHttpEvent<T>>
 
 
 /**
@@ -16,7 +16,7 @@ export type VHttpInterceptor = <T>(req: Readonly<VHttpRequest>, next: { handle: 
  * @publicApi
  */
 export interface XhrHandlerInstance {
-  handle: <T>(req: VHttpRequest) => Observable<any> | Observable<T> | Observable<VHttpEvent<any>> | Observable<VHttpEvent<T>>;
+  handle: <T>(req: VHttpRequest) => Observable<unknown> | Observable<T> | Observable<VHttpEvent<unknown>> | Observable<VHttpEvent<T>>;
 }
 
 
@@ -30,7 +30,7 @@ export type RequestMethod = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE' | 'OPTIO
  * A type of payload to be sent to the backend
  * @publicApi
  */
-export type RequestBody = object | ReadableStream<any> | Blob | ArrayBufferView
+export type RequestBody = object | ReadableStream<unknown> | Blob | ArrayBufferView
   | ArrayBuffer | FormData | URLSearchParams | string | null;
 
 

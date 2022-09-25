@@ -29,6 +29,7 @@
   "license": "MIT",
   "typings": "types/index.d.ts",
   "scripts": {
+    "lint": "eslint -c .eslintrc.cjs ./src/**",
     "dev": "vite",
     "build": "tsc && vite build --config vite.config.js && cp ./package.json dist/package.json && cp -r ./types dist && cp ./README.md dist",
     "build:local": "npm run build && npm pack ./dist/ --pack-destination ../v-http-module",
