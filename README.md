@@ -16,7 +16,6 @@ install using npm
 npm install vee-http
 ```
 
-
 ## Usage
 
 ```ts
@@ -45,11 +44,10 @@ export default createComponent({
 
 ### Composition API
 ```ts
-<script setup lang="ts">
-const {put} = useVHttpClient();
+const {http} = useVHttpClient();
 
 updateItem(item: {id: string, value: string}) {
-    put('http://my-item.server./items/' + item.id, item, {
+    http.put('http://my-item.server./items/' + item.id, item, {
         queryParams: {full: 'true'}
     })
         .pipe(
@@ -63,7 +61,6 @@ updateItem(item: {id: string, value: string}) {
         )
         .subscribe(res => console.log(`item ${ id } updated!`))
 }
-</script>
 ```
 
 ### Interceptors
@@ -120,4 +117,15 @@ async function loggerInterceptor(req, next): Promise<unknown> {
     return res;
 }
 
+```
+
+## Build
+
+```bash
+npm run build
+```
+
+If you wish to test the package locally use 
+```bash
+npm run build:local
 ```
