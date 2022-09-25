@@ -1,6 +1,6 @@
 import {App} from 'vue';
-import {RequestBody, StringOrRef, VHttpInterceptor, VHttpReqOptions} from "./lib/models/v-http-models";
-import {Observable} from "rxjs";
+import {VHttpInterceptor} from "./lib/models/v-http-models";
+import {HttpClient} from "./lib/classes/http-client";
 
 
 /**
@@ -8,14 +8,14 @@ import {Observable} from "rxjs";
  */
 declare module 'vue' {
   interface ComponentCustomProperties {
-    $vHttpClient: VHttpClient;
+    $vHttpClient: HttpClient;
   }
 }
 
 /**
  * Method for accessing VHttpClient methods from composition API
  */
-export declare function useVHttpClient(): VHttpClient;
+export declare function useVHttpClient(): { http: HttpClient };
 
 /**
  * Register the client with interceptors as a plugin
@@ -24,19 +24,6 @@ export declare function useVHttpClient(): VHttpClient;
 export declare function createVHttpClient(interceptors: VHttpInterceptor[]): {
   install: (V: App) => void
 };
-
-/**
- * Available VHttpClient methods
- */
-export interface VHttpClient {
-  get: <T>(url: StringOrRef, options?: VHttpReqOptions) => Observable<T>,
-  post: <T>(url: StringOrRef, body?: RequestBody, options?: VHttpReqOptions) => Observable<T>,
-  options: <T>(url: StringOrRef, options?: VHttpReqOptions) => Observable<T>,
-  del: <T>(url: StringOrRef, options?: VHttpReqOptions) => Observable<T>
-  put: <T>(url: StringOrRef, body?: RequestBody, options?: VHttpReqOptions) => Observable<T>,
-  patch: <T>(url: StringOrRef, body?: RequestBody, options?: VHttpReqOptions) => Observable<T>,
-  head: <T>(url: StringOrRef, body?: RequestBody, options?: VHttpReqOptions) => Observable<T>
-}
 
 export * from './lib/models/v-http-models';
 export * from './lib/classes/http-error-response';

@@ -1,33 +1,22 @@
 import type {App} from "vue";
-import {initHandler} from "./lib/core/xhr-handler";
-import {request, del, get, head, options, patch, post, put} from "./lib/core/http-methods";
+import xhrHandler, {initHandler} from "./lib/core/xhr-handler";
 import {VHttpInterceptor} from "./lib/models/v-http-models";
+import {HttpClient} from "./lib/classes/http-client";
 
 let _Vue: App;
+let _client: HttpClient;
 
-const vHttp = {
-  request,
-  get,
-  post,
-  put,
-  patch,
-  /*
-   * it might present problems when used in destructuring
-   * so it's renamed from delete to del
-   */
-  del,
-  options,
-  head
-};
-
-export const useVHttpClient = () => vHttp;
+export const useVHttpClient = () => ({
+  http: _client
+});
 
 export const createVHttpClient = (interceptors: VHttpInterceptor[]) => {
   initHandler(interceptors);
+  _client = new HttpClient(xhrHandler.instance);
   return {
     install(app: App){
       _Vue = app;
-      _Vue.config.globalProperties.$vHttpClient = vHttp;
+      _Vue.config.globalProperties.$vHttpClient = _client;
     }
   }
 }
