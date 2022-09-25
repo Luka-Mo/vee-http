@@ -33,6 +33,9 @@
     "dev": "vite",
     "build": "tsc && vite build --config vite.config.js && cp ./package.json dist/package.json && cp -r ./types dist && cp ./README.md dist",
     "build:local": "npm run build && npm pack ./dist/ --pack-destination ../v-http-module",
+    "version:minor": "npm run lint && npm version minor -m \"chore: Upgrade version to %s \" && npm run build",
+    "version:major": "npm run lint && npm version major -m \"chore: Upgrade version to %s \" && npm run build",
+    "version:patch": "npm run lint && npm version patch -m \"chore: Upgrade version to %s \" && npm run build",
     "preview": "vite preview"
   },
   "devDependencies": {
