@@ -105,7 +105,7 @@ export interface VHttpEvent<T> extends VHttpResponse<T> {
 /**
  * A response returned by the XHR
  *
- * If the status is > 399 it returns a {@link HttpErrorResponse} Instead
+ * If the status is > 399 it returns a {@link lib/classes/http-error-response.HttpErrorResponse} Instead
  */
 export interface VHttpResponse<T> {
   status: number,
@@ -115,7 +115,7 @@ export interface VHttpResponse<T> {
 
 
 /**
- * Progress report used in {@link VHttpEvent<T>}
+ * Progress report used in {@link VHttpEvent}
  */
 export interface VHttpProgressReport {
   total: number | null,
