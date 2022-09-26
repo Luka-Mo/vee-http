@@ -199,7 +199,7 @@ export class HttpClient {
       url: sanitizedUrl,
       options,
       headers: sanitizedHeaders,
-      body,
+      body: body != null ? body : options?.body ?? null,
       method
     };
   }
