@@ -1,6 +1,6 @@
-import {HttpClient} from "./http-client";
+import {HttpClient} from "../../src/lib/classes/http-client";
 import {of, take} from "rxjs";
-import {VHttpRequest} from "../models/v-http-models";
+import {VHttpRequest} from "../../src/lib/models/v-http-models";
 import {ref} from "vue";
 
 describe('HttpClient', () => {
