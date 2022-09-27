@@ -1,4 +1,4 @@
-import {sanitizeQueryParams} from "./sanitize-query-params";
+import {sanitizeQueryParams} from "../../src/lib/utils/sanitize-query-params";
 
 describe('sanitizeQueryParams', () => {
   test('should sanitize params', () => {

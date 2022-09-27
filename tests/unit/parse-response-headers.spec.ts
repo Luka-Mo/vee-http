@@ -1,4 +1,4 @@
-import parseResponseHeaders from './parse-response-headers';
+import parseResponseHeaders from '../../src/lib/utils/parse-response-headers';
 
 describe('parseResponseHeaders', () => {
   test('should parse headers', () => {

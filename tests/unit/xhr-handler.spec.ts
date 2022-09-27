@@ -3,7 +3,7 @@ describe('xhrHandler should', () => {
     jest.resetModules();
   })
   test('init handler without interceptors', async () => {
-    const module: any = await import('./xhr-handler');
+    const module: any = await import('../../src/lib/core/xhr-handler');
 
     module.initHandler(undefined);
     expect(module.default.instance).toBeDefined();
@@ -12,7 +12,7 @@ describe('xhrHandler should', () => {
   });
 
   test('init handler with interceptors', async () => {
-    const module: any = await import('./xhr-handler');
+    const module: any = await import('../../src/lib/core/xhr-handler');
     const interceptors = [
       function interceptor1(req: any, next: any) { return next.handle(req) },
       function interceptor2(req: any, next: any) { return next.handle(req) }

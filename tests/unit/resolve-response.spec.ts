@@ -1,4 +1,4 @@
-import resolveResponse from "./resolve-response";
+import resolveResponse from "../../src/lib/utils/resolve-response";
 
 describe('resolveResponse should', () => {
   describe('handle errors and throw', () => {

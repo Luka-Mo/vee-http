@@ -1,4 +1,4 @@
-import {serializePayload} from "./serialize-payload";
+import {serializePayload} from "../../src/lib/utils/serialize-payload";
 
 describe('serializePayload should', () => {
   test('not serialize ArrayBuffer payload', () => {
