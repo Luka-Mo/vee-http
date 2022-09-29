@@ -24,6 +24,26 @@ describe('xhrHandler should', () => {
     expect(module.default.instance.next.next).toBeDefined();
     expect(module.default.instance.next.next.handle).toBeDefined();
   });
+
+  test('throw an error if an interceptor is not a function', async () => {
+    const module: any = await import('../../src/lib/core/xhr-handler');
+    const interceptors = [
+      'string',
+    ];
+
+    const initHandlerCall = () => module.initHandler(interceptors);
+    expect(initHandlerCall).toThrow(/Incorrect interceptor present in the interceptor chain!/);
+  });
+
+  test('throw an error if handler has already been initialized', async () => {
+    const module: any = await import('../../src/lib/core/xhr-handler');
+
+    module.initHandler(undefined);
+    expect(module.default.instance).toBeDefined();
+
+    const throwCall = () => module.initHandler(undefined);
+    expect(throwCall).toThrow(/Handler already initialized!/);
+  });
 });
 
 export default {}

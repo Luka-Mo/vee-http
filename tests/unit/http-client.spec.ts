@@ -136,4 +136,15 @@ describe('HttpClient', () => {
         done();
       });
   });
+
+  test('should handle a DELETE', (done) => {
+    client.delete('test.url/endpoint')
+      .pipe(take(1))
+      .subscribe((res) => {
+        const builtRequest = res as unknown as VHttpRequest;
+        expect(builtRequest.url).toBe('test.url/endpoint');
+        expect(builtRequest.method).toBe('DELETE');
+        done();
+      });
+  });
 });
