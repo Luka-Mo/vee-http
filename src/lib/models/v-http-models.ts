@@ -95,6 +95,7 @@ export enum XhrEvent {
  * of the response which additionally includes the {@link VHttpProgressReport} data
  */
 export interface VHttpEvent<T> extends VHttpResponse<T> {
+  type: XhrEvent;
   progress?: VHttpProgressReport
   status: number,
   body: T | null,
