@@ -5,7 +5,6 @@ import type {Ref} from 'vue';
  * Interceptor function
  * @param {VHttpRequest} req
  * @param {XhrHandlerInstance} next
- * @publicApi
  */
 export type VHttpInterceptor = <T>(req: Readonly<VHttpRequest>, next: { handle: VHttpInterceptor }) =>
   Observable<T> | Observable<any> | Observable<VHttpEvent<any>> | Observable<VHttpEvent<T>>
@@ -13,16 +12,12 @@ export type VHttpInterceptor = <T>(req: Readonly<VHttpRequest>, next: { handle: 
 
 /**
  * Handler instance that triggers the interceptor chain
- * @publicApi
  */
 export interface XhrHandlerInstance {
   handle: <T>(req: VHttpRequest) => Observable<any> | Observable<T> | Observable<VHttpEvent<any>> | Observable<VHttpEvent<T>>;
 }
 
 
-/**
- * @publicApi
- */
 export type RequestMethod = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE' | 'OPTIONS' | 'HEAD';
 
 
@@ -93,6 +88,15 @@ export interface VHttpReqOptions {
   skipDefaultHeaders?: boolean;
 }
 
+export enum XhrEvent {
+  LOAD = 'load',
+  LOADSTART = 'loadstart',
+  LOADEND = 'loadend',
+  PROGRESS = 'progress',
+  ERROR = 'error',
+  ABORT = 'abort'
+}
+
 /**
  * When observe is set to 'response' events are sent out instead
  * of the response which additionally includes the Progress data
@@ -100,6 +104,7 @@ export interface VHttpReqOptions {
  * @publicApi
  */
 export interface VHttpEvent<T> extends VHttpResponse<T> {
+  type: XhrEvent;
   progress?: VHttpProgressReport
   status: number,
   body: T | null,

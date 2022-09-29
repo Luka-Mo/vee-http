@@ -1,4 +1,4 @@
-import {serializePayload} from "../../src/lib/utils/serialize-payload";
+import {serializePayload} from '../../src/lib/utils/serialize-payload';
 
 describe('serializePayload should', () => {
   test('not serialize ArrayBuffer payload', () => {
@@ -36,14 +36,14 @@ describe('serializePayload should', () => {
 
   test('handle objects', () => {
     expect(serializePayload({})).toBe('{}');
-    expect(serializePayload({value: '123'})).toBe('{\"value\":\"123\"}');
+    expect(serializePayload({value: '123'})).toBe('{"value":"123"}');
   });
 
   test('handle arrays', () => {
     expect(serializePayload([])).toBe('[]');
     expect(serializePayload([1, 2, 3])).toBe('[1,2,3]');
-    expect(serializePayload(['a', 'b', 'c'])).toBe('[\"a\",\"b\",\"c\"]');
-    expect(serializePayload([{value: 'test'}])).toBe('[{\"value\":\"test\"}]');
+    expect(serializePayload(['a', 'b', 'c'])).toBe('["a","b","c"]');
+    expect(serializePayload([{value: 'test'}])).toBe('[{"value":"test"}]');
   });
 
   test('handle numbers', () => {

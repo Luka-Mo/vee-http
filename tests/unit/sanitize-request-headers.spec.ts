@@ -1,4 +1,4 @@
-import {sanitizeRequestHeaders} from "../../src/lib/utils/sanitize-request-headers";
+import {sanitizeRequestHeaders} from '../../src/lib/utils/sanitize-request-headers';
 
 describe('sanitizeRequestHeaders', () => {
   test('should sanitize request headers', () => {
