@@ -1,11 +1,11 @@
-import xhrRequest from "../../src/lib/core/xhr-request";
-import {XhrMock} from "../mocks/xhr.mock";
-import {catchError, EMPTY, finalize, scan, tap} from "rxjs";
-import {XhrBlobMock} from "../mocks/xhr-blob.mock";
-import {XhrErrorMock} from "../mocks/xhr-error.mock";
-import {HttpErrorResponse} from "../../src/lib/classes/http-error-response";
-import {XhrEventsMock} from "../mocks/xhr-events.mock";
-import {VHttpEvent, VHttpRequest, XhrEvent} from "../../src/lib/models/v-http-models";
+import xhrRequest from '../../src/lib/core/xhr-request';
+import {XhrMock} from '../mocks/xhr.mock';
+import {catchError, EMPTY, finalize, scan, tap} from 'rxjs';
+import {XhrBlobMock} from '../mocks/xhr-blob.mock';
+import {XhrErrorMock} from '../mocks/xhr-error.mock';
+import {HttpErrorResponse} from '../../src/lib/classes/http-error-response';
+import {XhrEventsMock} from '../mocks/xhr-events.mock';
+import {VHttpEvent, VHttpRequest, XhrEvent} from '../../src/lib/models/v-http-models';
 
 describe('XhrRequest', () => {
   const baseRequest: VHttpRequest = {
@@ -13,15 +13,15 @@ describe('XhrRequest', () => {
     headers: new Headers(),
     body: null,
     method: 'GET'
-  }
+  };
 
   beforeEach(() => {
     jest.resetAllMocks();
-  })
+  });
 
   test('should trigger a simple request', (done) => {
     window.XMLHttpRequest = XhrMock;
-    const headersSpy = jest.spyOn(XMLHttpRequest.prototype, 'setRequestHeader')
+    const headersSpy = jest.spyOn(XMLHttpRequest.prototype, 'setRequestHeader');
     xhrRequest(baseRequest)
       .pipe(finalize(() => done()))
       .subscribe(c => {
@@ -33,7 +33,7 @@ describe('XhrRequest', () => {
 
   test('should add headers from the request', (done) => {
     window.XMLHttpRequest = XhrMock;
-    const headersSpy = jest.spyOn(XMLHttpRequest.prototype, 'setRequestHeader')
+    const headersSpy = jest.spyOn(XMLHttpRequest.prototype, 'setRequestHeader');
     xhrRequest({...baseRequest, headers: new Headers({'X-Requested-With': 'XMLHttpRequest'})})
       .pipe(finalize(() => done()))
       .subscribe(c => {
@@ -41,14 +41,14 @@ describe('XhrRequest', () => {
         expect(headersSpy.mock.calls).toEqual([
           ['x-requested-with', 'XMLHttpRequest'],
           ['Accept', 'application/json, text/plain, */*']
-        ])
+        ]);
         expect(c).toEqual({mockValue: 'mock data'});
       });
   });
 
   describe('should try to add a Content-Type header if request has body but not headers', () => {
     window.XMLHttpRequest = XhrMock;
-    const headersSpy = jest.spyOn(XMLHttpRequest.prototype, 'setRequestHeader')
+    const headersSpy = jest.spyOn(XMLHttpRequest.prototype, 'setRequestHeader');
 
     test('for JSON', (done) => {
       xhrRequest({
@@ -63,7 +63,7 @@ describe('XhrRequest', () => {
             ['Content-Type', 'application/json'],
             ['Accept', 'application/json, text/plain, */*']
           ]);
-        })
+        });
     });
 
     test('for Blob with type', (done) => {
@@ -80,7 +80,7 @@ describe('XhrRequest', () => {
             ['Content-Type', 'image/png'],
             ['Accept', 'application/json, text/plain, */*']
           ]);
-        })
+        });
     });
 
     test('for URLSearchParams with type', (done) => {
@@ -99,7 +99,7 @@ describe('XhrRequest', () => {
             ['Content-Type', 'application/x-www-form-urlencoded;charset=UTF-8'],
             ['Accept', 'application/json, text/plain, */*']
           ]);
-        })
+        });
     });
 
     test('for string with type', (done) => {
@@ -116,7 +116,7 @@ describe('XhrRequest', () => {
             ['Content-Type', 'text/plain'],
             ['Accept', 'application/json, text/plain, */*']
           ]);
-        })
+        });
     });
   });
 
@@ -173,7 +173,7 @@ describe('XhrRequest', () => {
     xhrRequest({
       ...baseRequest,
       headers: new Headers(),
-      options: {observe: "response"}
+      options: {observe: 'response'}
     })
       .pipe(
         tap((ev: VHttpEvent<unknown>) => events.push(ev)),
@@ -182,14 +182,14 @@ describe('XhrRequest', () => {
       ).subscribe(i => {
         if (i === 0) {
           expect(events[i].progress!.loaded).toBe(0);
-          expect(events[i].type).toBe(XhrEvent.LOADSTART)
+          expect(events[i].type).toBe(XhrEvent.LOADSTART);
         } else if (i === 4) {
           expect(events[i].progress!.loaded).toBe(100);
-          expect(events[i].type).toBe(XhrEvent.LOAD)
+          expect(events[i].type).toBe(XhrEvent.LOAD);
         } else {
           expect(events[i].progress!.loaded).toBe(i * 20);
-          expect(events[i].type).toBe(XhrEvent.PROGRESS)
+          expect(events[i].type).toBe(XhrEvent.PROGRESS);
         }
       });
-  })
+  });
 });

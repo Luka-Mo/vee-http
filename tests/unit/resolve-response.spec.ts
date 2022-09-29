@@ -1,4 +1,4 @@
-import resolveResponse from "../../src/lib/utils/resolve-response";
+import resolveResponse from '../../src/lib/utils/resolve-response';
 
 describe('resolveResponse should', () => {
   describe('return correct type', () => {
@@ -20,7 +20,7 @@ describe('resolveResponse should', () => {
       const testObject = {
         value: 5,
         item: 'test'
-      }
+      };
 
       expect(resolveResponse(testObject, 'json')).toBe(testObject);
     });
@@ -50,6 +50,7 @@ describe('resolveResponse should', () => {
 
     test('when expected null but got string', () => {
       function throwTest() {
+        // eslint-disable-next-line
         resolveResponse('test', 'randomstring' as any);
       }
       expect(throwTest).toThrow(/response type does not match/);

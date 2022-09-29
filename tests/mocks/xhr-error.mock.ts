@@ -1,9 +1,9 @@
-import {XhrMock} from "./xhr.mock";
-import {take, timer} from "rxjs";
-import {XhrEvent} from "../../src/lib/models/v-http-models";
+import {XhrMock} from './xhr.mock';
+import {take, timer} from 'rxjs';
+import {XhrEvent} from '../../src/lib/models/v-http-models';
 
 export class XhrErrorMock extends XhrMock {
-  send(_body: any | null) {
+  send(_body: unknown | null) {
     timer(50)
       .pipe(take(1))
       .subscribe(() => {

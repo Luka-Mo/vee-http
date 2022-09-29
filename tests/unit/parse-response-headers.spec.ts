@@ -19,4 +19,4 @@ describe('parseResponseHeaders', () => {
   test('should handle empty string', () => {
     expect(parseResponseHeaders('')).toEqual({});
   });
-})
+});

@@ -1,9 +1,9 @@
-import {XhrMock} from "./xhr.mock";
-import {interval, map, scan, skipWhile, switchMap, tap, timer} from "rxjs";
-import {XhrEvent} from "../../src/lib/models/v-http-models";
+import {XhrMock} from './xhr.mock';
+import {interval, map, scan, skipWhile, switchMap, tap, timer} from 'rxjs';
+import {XhrEvent} from '../../src/lib/models/v-http-models';
 
 export class XhrEventsMock extends XhrMock {
-  send(_body: any | null) {
+  send(_body: unknown) {
     timer(50)
       .pipe(
         tap(() => {
@@ -13,7 +13,7 @@ export class XhrEventsMock extends XhrMock {
         switchMap(() => interval(20)),
         map(_ => 1),
         scan((acc: number, val: number) => {
-          return acc + val
+          return acc + val;
         }, 0),
         tap(loaded => {
           if (loaded < 4) {

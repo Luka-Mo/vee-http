@@ -1,7 +1,7 @@
-import {HttpClient} from "../../src/lib/classes/http-client";
-import {of, take} from "rxjs";
-import {VHttpRequest} from "../../src/lib/models/v-http-models";
-import {ref} from "vue";
+import {HttpClient} from '../../src/lib/classes/http-client';
+import {of, take} from 'rxjs';
+import {VHttpRequest} from '../../src/lib/models/v-http-models';
+import {ref} from 'vue';
 
 describe('HttpClient', () => {
   const client = new HttpClient({handle: (req) => of(req)});
@@ -18,11 +18,11 @@ describe('HttpClient', () => {
         expect(builtRequest.url).toBe('test.url/endpoint');
         expect(builtRequest.body).toBe(null);
         expect(builtRequest.options?.queryParams).toBeUndefined();
-        expect(builtRequest.options?.responseType).toBeUndefined()
+        expect(builtRequest.options?.responseType).toBeUndefined();
         expect(builtRequest.method).toBe('GET');
         expect(builtRequest.headers.get('X-Requested-With')).toBe('XMLHttpRequest');
         done();
-      })
+      });
   });
 
   test('should handle a request with Ref as url', (done) => {
@@ -54,7 +54,7 @@ describe('HttpClient', () => {
         expect(builtRequest.method).toBe('GET');
         expect(builtRequest.headers.get('X-Requested-With')).toBe('XMLHttpRequest');
         done();
-      })
+      });
   });
 
   test('should handle a GET request with URLSearchParams', (done) => {

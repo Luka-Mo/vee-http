@@ -64,6 +64,7 @@ export interface VHttpRequest {
  */
 export type StringOrRef = string | Ref<string>
 
+
 /**
  * Request settings that can optionally be
  * passed to the call
@@ -76,6 +77,7 @@ export interface VHttpReqOptions {
   observe?: ResObserveType;
   skipDefaultHeaders?: boolean;
 }
+
 
 /**
  * @ignore

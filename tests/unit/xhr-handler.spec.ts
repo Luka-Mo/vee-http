@@ -1,8 +1,12 @@
+import {XhrHandlerInstance} from '../../src/lib/models/v-http-models';
+
 describe('xhrHandler should', () => {
   beforeEach(() => {
     jest.resetModules();
-  })
+  });
+
   test('init handler without interceptors', async () => {
+    // eslint-disable-next-line
     const module: any = await import('../../src/lib/core/xhr-handler');
 
     module.initHandler(undefined);
@@ -12,10 +16,13 @@ describe('xhrHandler should', () => {
   });
 
   test('init handler with interceptors', async () => {
+    // eslint-disable-next-line
     const module: any = await import('../../src/lib/core/xhr-handler');
     const interceptors = [
-      function interceptor1(req: any, next: any) { return next.handle(req) },
-      function interceptor2(req: any, next: any) { return next.handle(req) }
+      // eslint-disable-next-line
+      function interceptor1(req: any, next: any) { return next.handle(req); },
+      // eslint-disable-next-line
+      function interceptor2(req: any, next: any) { return next.handle(req); }
     ];
 
     module.initHandler(interceptors);
@@ -26,16 +33,18 @@ describe('xhrHandler should', () => {
   });
 
   test('throw an error if an interceptor is not a function', async () => {
+    // eslint-disable-next-line
     const module: any = await import('../../src/lib/core/xhr-handler');
     const interceptors = [
       'string',
     ];
 
-    const initHandlerCall = () => module.initHandler(interceptors);
+    const initHandlerCall = (): XhrHandlerInstance => module.initHandler(interceptors);
     expect(initHandlerCall).toThrow(/Incorrect interceptor present in the interceptor chain!/);
   });
 
   test('throw an error if handler has already been initialized', async () => {
+    // eslint-disable-next-line
     const module: any = await import('../../src/lib/core/xhr-handler');
 
     module.initHandler(undefined);
@@ -46,4 +55,4 @@ describe('xhrHandler should', () => {
   });
 });
 
-export default {}
+export default {};
