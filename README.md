@@ -1,24 +1,35 @@
 > Vue3 HTTP Client using RxJS
 
-## Features
+Table of Contents
+=================
+* [Fetures](#features)
+* [Install](#install)
+* [Usage](#usage)
+  * [Options API](#options-api)
+  * [Composition API](#composition-api)
+  * [Interceptors](#interceptors)
+  * [Promises](#promises)
+* [Docs](#docs)
+* [Build](#build)
 
-* XMLHttpRequests from the browser
-* Supports the rxjs API
-* Intercept requests and responses globally
-* Supports both Options and Composition API
-* Full Typescript support
-* Can be used as a plugin for Vue
+# Features
 
-## Install
+- [X] XMLHttpRequests from the browser
+- [X] Supports the rxjs API
+- [X] Intercept requests and responses globally
+- [X] Supports both Options and Composition API
+- [X] Full Typescript support
+- [X] Can be used as a plugin for Vue
 
+
+# Install
 install using npm
 ```bash
 npm install vee-http
 ```
 
-## Usage
-
-```ts
+# Usage
+```js
 import createApp from 'vue';
 import App from 'vue/App';
 import createVHttpClient from 'v-http';
@@ -28,9 +39,9 @@ app.use(createVHttpClient())
 ```
 
 
-### Options API
+## Options API
 You can access the client via the registered globals
-```ts
+```js
 export default createComponent({
     data() {
         names: []
@@ -42,8 +53,8 @@ export default createComponent({
 })
 ```
 
-### Composition API
-```ts
+## Composition API
+```js
 const {http} = useVHttpClient();
 
 updateItem(item: {id: string, value: string}) {
@@ -63,10 +74,10 @@ updateItem(item: {id: string, value: string}) {
 }
 ```
 
-### Interceptors
+## Interceptors
 
 Interceptors are chained in the order that they are passed to the array. They're useful for global level settings, like authentication headers, caching and logging.
-```ts
+```js
 // you can use the interceptor to intercept responses
 // by using the rxjs pipe operator
 function loggerInterceptor(req, next) {
@@ -101,13 +112,13 @@ app.use(createVHttpClient(interceptors))
 
 ```
 
-### Promises
+## Promises
 
 All the calls can be converted to promises using the lastValueFrom (or firstValueFrom) operator.
 
 The caveat here is that this has to be the first interceptor in the chain and the types
 have to be coerced into Promises.
-```ts
+```js
 import lastValueFrom from 'rxjs/operators';
 
 async function loggerInterceptor(req, next): Promise<unknown> {
@@ -118,8 +129,11 @@ async function loggerInterceptor(req, next): Promise<unknown> {
 }
 
 ```
+# Docs
 
-## Build
+for more details please see the [documentation](https://luka-mo.github.io/vee-http/)
+
+# Build
 
 ```bash
 npm run build
@@ -129,3 +143,6 @@ If you wish to test the package locally use
 ```bash
 npm run build:local
 ```
+
+## Warning
+Library is under active development and may have API breaking changes for subsequent major versions after 1.0.0.
