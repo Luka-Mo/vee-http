@@ -53,7 +53,7 @@ export type ResObserveType = 'response' | 'body';
 export interface VHttpRequest {
   url: string;
   method: RequestMethod;
-  headers: Headers;
+  headers: Map<string, string>;
   body?: RequestBody;
   options?: VHttpReqOptions;
 }
@@ -75,7 +75,6 @@ export interface VHttpReqOptions {
   queryParams?: Record<string, StringOrRef>;
   responseType?: RequestResponseType;
   observe?: ResObserveType;
-  skipDefaultHeaders?: boolean;
 }
 
 export enum XhrEvent {
