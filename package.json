@@ -30,6 +30,7 @@
   "typings": "types/index.d.ts",
   "scripts": {
     "lint": "eslint -c .eslintrc.cjs ./src/** ./tests/**",
+    "commitlint": "commitlint -g commitlint.config.cjs -V",
     "test": "jest",
     "dev": "vite",
     "build": "tsc && vite build --config vite.config.js && cp ./package.json dist/package.json && cp -r ./types dist && cp ./README.md dist",
@@ -41,6 +42,8 @@
   },
   "devDependencies": {
     "@babel/preset-typescript": "^7.18.6",
+    "@commitlint/cli": "^17.1.2",
+    "@commitlint/config-conventional": "^17.1.0",
     "@types/jest": "^29.0.3",
     "@typescript-eslint/eslint-plugin": "^5.37.0",
     "@typescript-eslint/parser": "^5.37.0",
