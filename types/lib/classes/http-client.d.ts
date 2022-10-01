@@ -1,6 +1,7 @@
 import {
   RequestBody,
   RequestMethod,
+  RequestResponseType,
   StringOrRef,
   VHttpEvent,
   VHttpReqOptions,
@@ -25,7 +26,6 @@ export class HttpClient {
     queryParams?: Record<string, StringOrRef>;
     responseType?: RequestResponseType;
     observe?: 'response';
-    skipDefaultHeaders?: boolean;
   }): Observable<VHttpEvent<T>>
   /**
    *
@@ -59,7 +59,6 @@ export class HttpClient {
     queryParams?: Record<string, StringOrRef>;
     responseType?: RequestResponseType;
     observe?: 'response';
-    skipDefaultHeaders?: boolean;
   }): Observable<VHttpEvent<T>>
   /**
    * Triggers a GET method call that is executed when the observable is subscribed to
@@ -90,7 +89,6 @@ export class HttpClient {
     queryParams?: Record<string, StringOrRef>;
     responseType?: RequestResponseType;
     observe?: 'response';
-    skipDefaultHeaders?: boolean;
   }): Observable<VHttpEvent<T>>
   /**
    * Triggers a POST method call that is executed when the observable is subscribed to
@@ -123,7 +121,6 @@ export class HttpClient {
     queryParams?: Record<string, StringOrRef>;
     responseType?: RequestResponseType;
     observe?: 'response';
-    skipDefaultHeaders?: boolean;
   }): Observable<VHttpEvent<T>>
   /**
    * Triggers a PUT method call that is executed when the observable is subscribed to
@@ -155,7 +152,6 @@ export class HttpClient {
     queryParams?: Record<string, StringOrRef>;
     responseType?: RequestResponseType;
     observe?: 'response';
-    skipDefaultHeaders?: boolean;
   }): Observable<VHttpEvent<T>>
   /**
    * Triggers a PATCH method call that is executed when the observable is subscribed to
@@ -186,7 +182,6 @@ export class HttpClient {
     queryParams?: Record<string, StringOrRef>;
     responseType?: RequestResponseType;
     observe?: 'response';
-    skipDefaultHeaders?: boolean;
   }): Observable<VHttpEvent<T>>
   /**
    * Triggers an OPTIONS method call that is executed when the observable is subscribed to
@@ -216,7 +211,6 @@ export class HttpClient {
     queryParams?: Record<string, StringOrRef>;
     responseType?: RequestResponseType;
     observe?: 'response';
-    skipDefaultHeaders?: boolean;
   }): Observable<VHttpEvent<T>>
   /**
    * Triggers a DELETE method call that is executed when the observable is subscribed to
@@ -247,7 +241,6 @@ export class HttpClient {
     queryParams?: Record<string, StringOrRef>;
     responseType?: RequestResponseType;
     observe?: 'response';
-    skipDefaultHeaders?: boolean;
   }): Observable<VHttpEvent<T>>
   /**
    * Triggers a HEAD method call that is executed when the observable is subscribed to

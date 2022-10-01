@@ -10,7 +10,7 @@ import {VHttpEvent, VHttpRequest, XhrEvent} from '../../src/lib/models/v-http-mo
 describe('XhrRequest', () => {
   const baseRequest: VHttpRequest = {
     url: 'testUrl/api',
-    headers: new Headers(),
+    headers: new Map(),
     body: null,
     method: 'GET'
   };
@@ -34,12 +34,12 @@ describe('XhrRequest', () => {
   test('should add headers from the request', (done) => {
     window.XMLHttpRequest = XhrMock;
     const headersSpy = jest.spyOn(XMLHttpRequest.prototype, 'setRequestHeader');
-    xhrRequest({...baseRequest, headers: new Headers({'X-Requested-With': 'XMLHttpRequest'})})
+    xhrRequest({...baseRequest, headers: new Map([['X-Requested-With', 'XMLHttpRequest']])})
       .pipe(finalize(() => done()))
       .subscribe(c => {
         expect(headersSpy).toHaveBeenCalledTimes(2);
         expect(headersSpy.mock.calls).toEqual([
-          ['x-requested-with', 'XMLHttpRequest'],
+          ['X-Requested-With', 'XMLHttpRequest'],
           ['Accept', 'application/json, text/plain, */*']
         ]);
         expect(c).toEqual({mockValue: 'mock data'});
@@ -71,7 +71,7 @@ describe('XhrRequest', () => {
         ...baseRequest,
         method: 'POST',
         body: new Blob(['test'], {type: 'image/png'}),
-        headers: new Headers()
+        headers: new Map()
       })
         .pipe(finalize(() => done()))
         .subscribe(() => {
@@ -90,7 +90,7 @@ describe('XhrRequest', () => {
         options: {
           body: new URLSearchParams({'search': 'test'})
         },
-        headers: new Headers()
+        headers: new Map()
       })
         .pipe(finalize(() => done()))
         .subscribe(() => {
@@ -107,7 +107,7 @@ describe('XhrRequest', () => {
         ...baseRequest,
         method: 'POST',
         body: 'body as string',
-        headers: new Headers()
+        headers: new Map()
       })
         .pipe(finalize(() => done()))
         .subscribe(() => {
@@ -172,7 +172,7 @@ describe('XhrRequest', () => {
     const events: VHttpEvent<unknown>[] = [];
     xhrRequest({
       ...baseRequest,
-      headers: new Headers(),
+      headers: new Map(),
       options: {observe: 'response'}
     })
       .pipe(
