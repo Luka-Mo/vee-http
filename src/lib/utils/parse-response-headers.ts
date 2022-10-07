@@ -4,7 +4,7 @@ export default function (headers: string): Record<string, string> {
   keyValuePairs
     .filter(keyValuePair => !!keyValuePair && keyValuePair.includes(':'))
     .forEach((keyValuePair: string) => {
-      const [key, value] = keyValuePair.split(':');
+      const [key, value] = keyValuePair.split(/:\s/);
       sanitizedHeaders[key.trim()] = value.trim();
     });
   return sanitizedHeaders;

@@ -1,14 +1,10 @@
 import {
-  delay,
-  finalize,
   fromEvent,
   map,
   merge,
   Observable,
-  Subject,
   take,
-  takeUntil,
-  tap
+  takeWhile
 } from 'rxjs';
 import {VHttpEvent, VHttpRequest, VHttpResponse, XhrEvent} from '../models/v-http-models';
 import parseResponseHeaders from '../utils/parse-response-headers';
@@ -17,12 +13,12 @@ import resolveResponse from '../utils/resolve-response';
 import {serializePayload} from '../utils/serialize-payload';
 
 function progressListener(xhr: XMLHttpRequest): Observable<VHttpEvent<unknown>> {
-  const dispose$ = new Subject<unknown>();
   return merge(
     fromEvent(xhr, XhrEvent.LOADSTART),
     fromEvent(xhr, XhrEvent.PROGRESS),
     fromEvent(xhr, XhrEvent.LOADEND),
     fromEvent(xhr, XhrEvent.LOAD),
+    fromEvent(xhr, XhrEvent.ABORT),
     errorListener(xhr)
   )
     .pipe(
@@ -33,16 +29,13 @@ function progressListener(xhr: XMLHttpRequest): Observable<VHttpEvent<unknown>> 
             loaded: progressEvent.loaded,
             total: progressEvent.total
           },
+          type: progressEvent.type,
           body: (progressEvent.target as XMLHttpRequest).response,
           headers: parseResponseHeaders(xhr.getAllResponseHeaders()),
           status: xhr.status
         } as VHttpEvent<unknown>;
       }),
-      takeUntil(dispose$.pipe(delay(1))),
-      tap(_ => {
-        if (xhr.readyState === xhr.DONE) dispose$.next(null);
-      }),
-      finalize(() => dispose$.complete())
+      takeWhile(ev => ev.type !== XhrEvent.LOADEND)
     );
 }
 
@@ -63,7 +56,7 @@ function loadListener(xhr: XMLHttpRequest): Observable<VHttpResponse<unknown>> {
             headers: parseResponseHeaders(xhr.getAllResponseHeaders())
           };
         }
-      })
+      }),
     );
 }
 
@@ -90,10 +83,10 @@ function addHeaders(req: VHttpRequest, xhr: XMLHttpRequest): void {
       contentType = 'application/x-www-form-urlencoded;charset=UTF-8';
     } else if (typeof req.body === 'string') {
       contentType = 'text/plain';
-    } else if (typeof req.body === 'object') {
-      contentType = 'application/json';
     } else if (req.body && (req.body as unknown) instanceof Blob) {
       contentType = (req.body as Blob).type || null;
+    } else if (typeof req.body === 'object') {
+      contentType = 'application/json';
     }
 
     if (contentType) {

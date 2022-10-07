@@ -52,7 +52,7 @@ export type ResObserveType = 'response' | 'body';
 export interface VHttpRequest {
   url: string;
   method: RequestMethod;
-  headers: Headers;
+  headers: Map<string, string>;
   body?: RequestBody;
   options?: VHttpReqOptions;
 }
@@ -64,6 +64,7 @@ export interface VHttpRequest {
  */
 export type StringOrRef = string | Ref<string>
 
+
 /**
  * Request settings that can optionally be
  * passed to the call
@@ -74,8 +75,8 @@ export interface VHttpReqOptions {
   queryParams?: Record<string, StringOrRef>;
   responseType?: RequestResponseType;
   observe?: ResObserveType;
-  skipDefaultHeaders?: boolean;
 }
+
 
 /**
  * @ignore
@@ -95,6 +96,7 @@ export enum XhrEvent {
  * of the response which additionally includes the {@link VHttpProgressReport} data
  */
 export interface VHttpEvent<T> extends VHttpResponse<T> {
+  type: XhrEvent;
   progress?: VHttpProgressReport
   status: number,
   body: T | null,

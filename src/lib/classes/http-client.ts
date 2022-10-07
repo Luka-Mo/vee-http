@@ -34,7 +34,6 @@ export class HttpClient {
     queryParams?: Record<string, StringOrRef>;
     responseType?: RequestResponseType;
     observe?: 'response';
-    skipDefaultHeaders?: boolean;
   }): Observable<VHttpEvent<T>>;
   request(method: RequestMethod, url: StringOrRef, body: RequestBody, options?: VHttpReqOptions): Observable<unknown>
   {
@@ -54,7 +53,6 @@ export class HttpClient {
     queryParams?: Record<string, StringOrRef>;
     responseType?: RequestResponseType;
     observe?: 'response';
-    skipDefaultHeaders?: boolean;
   }): Observable<VHttpEvent<T>>;
   get<T>(url: StringOrRef, options?: VHttpReqOptions): Observable<T>;
   get(url: StringOrRef, options?: VHttpReqOptions): Observable<unknown>
@@ -77,7 +75,6 @@ export class HttpClient {
     queryParams?: Record<string, StringOrRef>;
     responseType?: RequestResponseType;
     observe?: 'response';
-    skipDefaultHeaders?: boolean;
   }): Observable<VHttpEvent<T>>;
   post(url: StringOrRef, body: RequestBody, options?: VHttpReqOptions): Observable<unknown>
   {
@@ -99,7 +96,6 @@ export class HttpClient {
     queryParams?: Record<string, StringOrRef>;
     responseType?: RequestResponseType;
     observe?: 'response';
-    skipDefaultHeaders?: boolean;
   }): Observable<VHttpEvent<T>>;
   put(url: StringOrRef, body: RequestBody, options?: VHttpReqOptions): Observable<unknown>
   {
@@ -120,7 +116,6 @@ export class HttpClient {
     queryParams?: Record<string, StringOrRef>;
     responseType?: RequestResponseType;
     observe?: 'response';
-    skipDefaultHeaders?: boolean;
   }): Observable<VHttpEvent<T>>;
   patch(url: StringOrRef, body: RequestBody, options?: VHttpReqOptions): Observable<unknown>
   {
@@ -140,7 +135,6 @@ export class HttpClient {
     queryParams?: Record<string, StringOrRef>;
     responseType?: RequestResponseType;
     observe?: 'response';
-    skipDefaultHeaders?: boolean;
   }): Observable<VHttpEvent<T>>;
   options(url: StringOrRef, options?: VHttpReqOptions): Observable<unknown>
   {
@@ -160,7 +154,6 @@ export class HttpClient {
     queryParams?: Record<string, StringOrRef>;
     responseType?: RequestResponseType;
     observe?: 'response';
-    skipDefaultHeaders?: boolean;
   }): Observable<VHttpEvent<T>>;
   delete(url: StringOrRef, options?: VHttpReqOptions): Observable<unknown>
   {
@@ -181,7 +174,6 @@ export class HttpClient {
     queryParams?: Record<string, StringOrRef>;
     responseType?: RequestResponseType;
     observe?: 'response';
-    skipDefaultHeaders?: boolean;
   }): Observable<VHttpEvent<T>>;
   head(url: StringOrRef, options?: VHttpReqOptions): Observable<unknown>
   {
@@ -199,7 +191,7 @@ export class HttpClient {
       url: sanitizedUrl,
       options,
       headers: sanitizedHeaders,
-      body,
+      body: body != null ? body : options?.body ?? null,
       method
     };
   }
